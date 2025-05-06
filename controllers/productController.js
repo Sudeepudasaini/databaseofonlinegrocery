@@ -9,11 +9,11 @@ const images= req.files
 
 let imagesUrl= await Promise.all(
     images.map(async(item)=>{
-        let result=await Cloudinary.uploader.upload(item.path,{resource_type: 'image'});
+        let result=await cloudinary.uploader.upload(item.path,{resource_type: 'image'});
         return result.secure_url
     })
 )
-await Product.create({...productData,image: imageUrl})
+await Product.create({...productData,image: imagesUrl})
 res.json({success: true, message: "Product Added"})
 } catch (error) {
     console.log(error.message);

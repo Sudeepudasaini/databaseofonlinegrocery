@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const orederSchema= new mongoose.Schema({
+const orderSchema= new mongoose.Schema({
 userId: {type: String, required: true, ref: 'user'}, 
 items: [{
     product: {type: String, required: true, ref: 'product'},

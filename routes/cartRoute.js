@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+import express from 'express';
 import authUser from "../middleware/authUser.js";
 import { updateCart } from "../controllers/cartController.js";
 
-import express from 'express';
+
 
 const cartRouter = express.Router();
 
