@@ -14,11 +14,17 @@ export const placeOrderCOD = async (req, res)=>{
 
         }
 //Calculate Amount Using Items
-let amount= await items.reduce(async(ActiveXObject, item)=>{
-    const product = await Product.findById(item.product);
-    return (await acc) + product.offerPrice * item.quantity;
+// let amount= await items.reduce(async(ActiveXObject, item)=>{
+//     const product = await Product.findById(item.product);
+//     return (await acc) + product.offerPrice * item.quantity;
 
-},0)
+// },0);
+
+let amount = 0;
+for (const item of items) {
+    const product = await Product.findById(item.product);
+    amount += product.offerPrice * item.quantity;
+}
 //Add Tax Charge (2%)
 amount += Math.floor(amount * 0.02);
 await Order.create({
@@ -40,7 +46,8 @@ return res.json({success:true,message: "Order Placed Successfully"})
 export const getUserOrders = async (req,res)=>
 {
     try {
-        const {userId} = req.body;
+        // const {userId} = req.body;
+        const userId = req.userId;
         const orders = await Order.find({
             userId,
             $or: [{paymentType:"COD"}, {isPaid: true} ]
